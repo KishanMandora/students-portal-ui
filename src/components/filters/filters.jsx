@@ -34,13 +34,22 @@ function FilterTabs({ setSort }) {
   );
 }
 
-function FilterSports() {
+function FilterSports({ setSports }) {
+  const handleCheckboxChange = (e) => {
+    const isChecked = e.target.dataset.state === "checked";
+
+    if (isChecked) {
+      setSports((prev) => prev.filter((sport) => sport !== e.target.id));
+    } else {
+      setSports((prev) => [...prev, e.target.id]);
+    }
+  };
   return (
     <div className="flex flex-col gap-1.5 mt-4">
       <h3 className="text-lg"> Sports Filter</h3>
       {sports.map((sport) => (
         <div key={sport.id} className="flex items-center space-x-2">
-          <Checkbox id={sport.id} />
+          <Checkbox id={sport.id} onClick={handleCheckboxChange} />
           <Label htmlFor={sport.id}>{sport.name}</Label>
         </div>
       ))}
@@ -92,7 +101,7 @@ function FilterPercentage({ percentage, setPercentage }) {
   );
 }
 
-function Filters({ setSort, percentage, setPercentage, setGrade }) {
+function Filters({ setSort, percentage, setPercentage, setGrade, setSports }) {
   return (
     <div className="w-1/4 mx-auto">
       <div className="w-full p-3 border rounded-md border-zinc-800 sticky top-20">
@@ -102,7 +111,7 @@ function Filters({ setSort, percentage, setPercentage, setGrade }) {
           setPercentage={setPercentage}
         />
         <FilterGrades setGrade={setGrade} />
-        <FilterSports />
+        <FilterSports setSports={setSports} />
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ function Home() {
   const [sort, setSort] = useState("A-Z");
   const [percentage, setPercentage] = useState(50);
   const [grade, setGrade] = useState(null);
+  const [sports, setSports] = useState([]);
 
   const searchFilteredData = data.filter((student) => {
     return student.name.toLowerCase().includes(search.toLowerCase());
@@ -32,8 +33,11 @@ function Home() {
       })
     : percentageFilteredData;
 
-  console.log({ gradeFilteredData });
-  console.log("grade", grade);
+  const sportsFilteredData = sports.length
+    ? gradeFilteredData.filter((student) => {
+        return sports.every((sport) => student.sports.includes(sport));
+      })
+    : gradeFilteredData;
 
   return (
     <div className="flex w-3/4 mx-auto gap-4">
@@ -42,11 +46,12 @@ function Home() {
         percentage={percentage}
         setPercentage={setPercentage}
         setGrade={setGrade}
+        setSports={setSports}
       />
       <div className="w-3/4">
         <Search setSearch={setSearch} />
         <div className="flex flex-col gap-2 mt-4 pb-8">
-          {gradeFilteredData.map((student) => {
+          {sportsFilteredData.map((student) => {
             return <StudentCard key={student.id} student={student} />;
           })}
         </div>
