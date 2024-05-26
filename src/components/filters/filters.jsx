@@ -4,6 +4,7 @@ import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
+import { Button } from "../ui/button";
 
 const tabs = [
   { id: 1, name: "A-Z" },
@@ -92,6 +93,7 @@ function FilterPercentage({ percentage, setPercentage }) {
       </div>
       <Slider
         defaultValue={[50]}
+        value={[percentage]}
         max={100}
         step={1}
         className={"w-full"}
@@ -102,6 +104,13 @@ function FilterPercentage({ percentage, setPercentage }) {
 }
 
 function Filters({ setSort, percentage, setPercentage, setGrade, setSports }) {
+  const handleClearFilters = () => {
+    setSort("A-Z");
+    setPercentage(50);
+    setGrade(null);
+    setSports([]);
+  };
+
   return (
     <div className="w-1/4 mx-auto sticky top-20">
       <div className="w-full p-3 border rounded-md border-zinc-800 mt-6">
@@ -112,6 +121,9 @@ function Filters({ setSort, percentage, setPercentage, setGrade, setSports }) {
         />
         <FilterGrades setGrade={setGrade} />
         <FilterSports setSports={setSports} />
+        <Button className="w-full mt-4" onClick={handleClearFilters}>
+          Clear Filters
+        </Button>
       </div>
     </div>
   );

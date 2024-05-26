@@ -51,6 +51,9 @@ function Home() {
       <div className="w-3/4">
         <Search setSearch={setSearch} />
         <div className="flex flex-col gap-2 mt-4 pb-8">
+          <h3 className="text-lg text-end">
+            Students - {sportsFilteredData.length}{" "}
+          </h3>
           {sportsFilteredData.length ? (
             sportsFilteredData.map((student) => {
               return <StudentCard key={student.id} student={student} />;
