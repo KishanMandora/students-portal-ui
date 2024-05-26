@@ -48,14 +48,21 @@ function FilterSports() {
   );
 }
 
-function FilterGrades() {
+function FilterGrades({ setGrade }) {
+  const handleGradeChange = (e) => {
+    setGrade(Number(e.target.value));
+  };
   return (
     <div className="flex flex-col gap-1.5 mt-4">
       <h3 className="text-lg"> Grades Filter</h3>
       <RadioGroup defaultValue="comfortable">
         {grades.map((grade) => (
           <div key={grade.id} className="flex items-center space-x-2">
-            <RadioGroupItem value={grade.name} id={grade.id} />
+            <RadioGroupItem
+              value={grade.name}
+              id={grade.id}
+              onClick={handleGradeChange}
+            />
             <Label htmlFor={grade.id}>{grade.name} Grade</Label>
           </div>
         ))}
@@ -85,7 +92,7 @@ function FilterPercentage({ percentage, setPercentage }) {
   );
 }
 
-function Filters({ setSort, percentage, setPercentage }) {
+function Filters({ setSort, percentage, setPercentage, setGrade }) {
   return (
     <div className="w-1/4 mx-auto">
       <div className="w-full p-3 border rounded-md border-zinc-800 sticky top-20">
@@ -94,7 +101,7 @@ function Filters({ setSort, percentage, setPercentage }) {
           percentage={percentage}
           setPercentage={setPercentage}
         />
-        <FilterGrades />
+        <FilterGrades setGrade={setGrade} />
         <FilterSports />
       </div>
     </div>

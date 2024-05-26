@@ -271,13 +271,15 @@ const data = [
   },
 ];
 
-const grades = data.reduce((acc, curr) => {
-  const hasGrade = acc.find((grade) => grade.name === curr.grade);
-  if (!hasGrade) {
-    return [...acc, { id: curr.grade, name: curr.grade }];
-  }
-  return acc;
-}, []);
+const grades = data
+  .reduce((acc, curr) => {
+    const hasGrade = acc.find((grade) => grade.name === curr.grade);
+    if (!hasGrade) {
+      return [...acc, { id: curr.grade, name: curr.grade }];
+    }
+    return acc;
+  }, [])
+  .sort((a, b) => a.name - b.name);
 
 const sports = data.reduce((acc, curr) => {
   const hasSport = curr.sports.filter(
