@@ -64,24 +64,36 @@ function FilterGrades() {
   );
 }
 
-function FilterPercentage() {
+function FilterPercentage({ percentage, setPercentage }) {
+  const handleSliderChange = (value) => {
+    setPercentage(value[0]);
+  };
   return (
     <div className="mt-4">
       <div className="flex justify-between">
         <h3 className="text-lg mb-2">Percentage Filter</h3>
-        <span>50%</span>
+        <span>{percentage}%</span>
       </div>
-      <Slider defaultValue={[50]} max={100} step={1} className={"w-full"} />
+      <Slider
+        defaultValue={[50]}
+        max={100}
+        step={1}
+        className={"w-full"}
+        onValueChange={handleSliderChange}
+      />
     </div>
   );
 }
 
-function Filters({ setSort }) {
+function Filters({ setSort, percentage, setPercentage }) {
   return (
     <div className="w-1/4 mx-auto">
       <div className="w-full p-3 border rounded-md border-zinc-800 sticky top-20">
         <FilterTabs setSort={setSort} />
-        <FilterPercentage />
+        <FilterPercentage
+          percentage={percentage}
+          setPercentage={setPercentage}
+        />
         <FilterGrades />
         <FilterSports />
       </div>
