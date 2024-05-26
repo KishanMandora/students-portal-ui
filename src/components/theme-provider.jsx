@@ -1,60 +1,31 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { cn } from "../lib/utils";
 
-const initialState = {
-  theme: "system",
-  setTheme: () => null,
-};
-
-const ThemeProviderContext = createContext(initialState);
-
-export function ThemeProvider({
-  children,
-  defaultTheme = "system",
-  storageKey = "vite-ui-theme",
-  ...props
-}) {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem(storageKey) || defaultTheme
-  );
+export function ThemeWrapper({ defaultTheme, children, className }) {
+  const config = {
+    style: "default",
+    theme: "slate",
+    radius: 0.5,
+  };
 
   useEffect(() => {
     const root = window.document.documentElement;
 
-    root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
-  }, [theme]);
-
-  const value = {
-    theme,
-    setTheme: (theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
-  };
+    root.classList.add("dark");
+  });
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <div
+      className={cn(
+        `theme-${defaultTheme || config.theme}`,
+        "w-full",
+        className
+      )}
+      style={{
+        "--radius": `${defaultTheme ? 0.5 : config.radius}rem`,
+      }}
+    >
       {children}
-    </ThemeProviderContext.Provider>
+    </div>
   );
 }
-
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
-
-  return context;
-};
