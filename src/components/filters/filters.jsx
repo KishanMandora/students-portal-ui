@@ -10,13 +10,21 @@ const tabs = [
   { id: 2, name: "Z-A" },
 ];
 
-function FilterTabs() {
+function FilterTabs({ setSort }) {
+  const handleTabClick = (e) => {
+    setSort(e.target.innerText);
+  };
   return (
     <div>
       <Tabs defaultValue={tabs[0].name} className="w-full">
         <TabsList className="w-full">
           {tabs.map((tab) => (
-            <TabsTrigger className="w-1/2" key={tab.id} value={tab.name}>
+            <TabsTrigger
+              className="w-1/2"
+              key={tab.id}
+              value={tab.name}
+              onClick={handleTabClick}
+            >
               {tab.name}
             </TabsTrigger>
           ))}
@@ -41,7 +49,6 @@ function FilterSports() {
 }
 
 function FilterGrades() {
-  console.log("grades", grades);
   return (
     <div className="flex flex-col gap-1.5 mt-4">
       <h3 className="text-lg"> Grades Filter</h3>
@@ -69,11 +76,11 @@ function FilterPercentage() {
   );
 }
 
-function Filters() {
+function Filters({ setSort }) {
   return (
     <div className="w-1/4 mx-auto">
       <div className="w-full p-3 border rounded-md border-zinc-800 sticky top-20">
-        <FilterTabs />
+        <FilterTabs setSort={setSort} />
         <FilterPercentage />
         <FilterGrades />
         <FilterSports />
