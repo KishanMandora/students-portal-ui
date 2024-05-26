@@ -51,9 +51,15 @@ function Home() {
       <div className="w-3/4">
         <Search setSearch={setSearch} />
         <div className="flex flex-col gap-2 mt-4 pb-8">
-          {sportsFilteredData.map((student) => {
-            return <StudentCard key={student.id} student={student} />;
-          })}
+          {sportsFilteredData.length ? (
+            sportsFilteredData.map((student) => {
+              return <StudentCard key={student.id} student={student} />;
+            })
+          ) : (
+            <p className="text-center text-lg">
+              No students found, please change the filters and try again
+            </p>
+          )}
         </div>
       </div>
     </div>

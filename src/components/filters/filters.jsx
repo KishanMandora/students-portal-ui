@@ -103,8 +103,8 @@ function FilterPercentage({ percentage, setPercentage }) {
 
 function Filters({ setSort, percentage, setPercentage, setGrade, setSports }) {
   return (
-    <div className="w-1/4 mx-auto">
-      <div className="w-full p-3 border rounded-md border-zinc-800 sticky top-20">
+    <div className="w-1/4 mx-auto sticky top-20">
+      <div className="w-full p-3 border rounded-md border-zinc-800 mt-6">
         <FilterTabs setSort={setSort} />
         <FilterPercentage
           percentage={percentage}
